@@ -179,17 +179,25 @@ function insertElements(problem) {
 }
 insertElements(question); // Insert the initial 5 questions into the form
 
+
+
+// create a container for buttons
+const buttonContainer = document.createElement('div');
+buttonContainer.setAttribute('class', 'button-container');
+
 // Create and append the submit button
 let button = document.createElement('button');
 button.type = 'submit';
 button.setAttribute('class', 'submit-btn');
 button.textContent = "Submit";
-form.appendChild(button);
+buttonContainer.appendChild(button);
+
+form.appendChild(buttonContainer);
 
 // Timer elements and logic
 const minute = document.getElementById('minute');
 const second = document.getElementById('seconds');
-let totalTime = 10; // Total time for the quiz in seconds
+let totalTime = 120; // Total time for the quiz in seconds
 let timeUsed = 0; // Track elapsed time
 
 // Function to display remaining time
@@ -259,7 +267,7 @@ const restart = document.createElement('button');
 restart.type = "reset";
 restart.setAttribute("id", "restartBtn");
 restart.textContent = "Restart";
-form.appendChild(restart);
+buttonContainer.appendChild(restart);
 
 // Event handler for restarting the quiz
 restart.addEventListener('click', (event) => {
@@ -276,7 +284,7 @@ restart.addEventListener('click', (event) => {
    button.disabled = false; // Enable submit button
    clearInterval(id); // Stop the timer
 
-   totalTime = 10; // Reset timer
+   totalTime = 120; // Reset timer
    timeUsed = 0;
 
    // Remove all displayed questions
@@ -288,6 +296,8 @@ restart.addEventListener('click', (event) => {
    question = randomQuestion(); // Generate new set of random questions
    originalAns = {}; // Reset the correct answers object
    insertElements(question); // Insert new questions
+
+   form.insertAdjacentElement('beforeend', buttonContainer);
 
    id = setInterval(remainingTime, 1000); // Restart the timer
    form.addEventListener('submit', submitEvent); // Reattach the submit event
